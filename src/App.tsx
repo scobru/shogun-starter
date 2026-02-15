@@ -259,8 +259,8 @@ function App() {
         debounceInterval: 100,
       });
 
-      // Add debug methods to window for testing
-      if (typeof window !== "undefined") {
+      // Add debug methods to window for testing (only in development)
+      if (import.meta.env.DEV && typeof window !== "undefined") {
         // Wait a bit for Gun to initialize
         setTimeout(() => {
           console.log("ShogunCore after initialization:", shogunCore);
