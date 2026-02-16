@@ -152,16 +152,20 @@ function ShogunApp({ shogun }: ShogunAppProps) {
     showMetamask: true,
     showNostr: true,
     showZkProof: true,
-    enableGunDebug: true,
+    enableGunDebug: import.meta.env.DEV,
     enableConnectionMonitoring: true,
   };
 
   const handleLoginSuccess = (result: any) => {
-    console.log("Login success:", result);
+    if (import.meta.env.DEV) {
+      console.log("Login success:", result);
+    }
   };
 
   const handleError = (error: string | Error) => {
-    console.error("Auth error:", error);
+    if (import.meta.env.DEV) {
+      console.error("Auth error:", error);
+    }
   };
 
   return (
@@ -252,7 +256,7 @@ function App() {
         showMetamask: true,
         showZkProof: true,
         // Advanced features
-        enableGunDebug: true,
+        enableGunDebug: import.meta.env.DEV,
         enableConnectionMonitoring: true,
         defaultPageSize: 20,
         connectionTimeout: 10000,
