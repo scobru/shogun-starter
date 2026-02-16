@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 export const ThemeToggle: React.FC = () => {
-  // List of available themes
   const themes = ["light", "dark"] as const;
   type Theme = typeof themes[number];
   
-  // Initialize theme state from localStorage
   const [currentTheme, setCurrentTheme] = useState<Theme>(() => {
     const savedTheme = localStorage.getItem('theme');
     return (savedTheme && themes.includes(savedTheme as Theme)) ? (savedTheme as Theme) : "dark";
   });
 
-  // Update theme in localStorage and apply to document
   const setTheme = (theme: Theme) => {
     setCurrentTheme(theme);
     localStorage.setItem('theme', theme);
@@ -20,53 +17,43 @@ export const ThemeToggle: React.FC = () => {
     document.documentElement.classList.add(theme);
   };
 
-  // Initialize theme on component mount
   useEffect(() => {
     setTheme(currentTheme);
   }, []);
 
-  // Handle theme change
-  const handleThemeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTheme(e.target.value as Theme);
+  const toggleTheme = () => {
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    setTheme(newTheme);
   };
 
   return (
-    <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-circle">
-        <span className="inline-flex items-center gap-1">
-          <span
-            className="inline-block w-2 h-2 rounded-full"
-            style={{
-              backgroundColor: currentTheme === "dark" ? "#38bdf8" : "#f97316",
-            }}
-          />
-        </span>
-      </div>
-      <ul
-        tabIndex={0}
-        className="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52"
-      >
-        {themes.map((theme) => (
-          <li key={theme} className="form-control">
-            <label className="label cursor-pointer justify-between">
-              <span className="label-text text-sm capitalize">
-                {theme === "dark" ? "Dark" : "Light"}
-              </span>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="radio theme-controller"
-                value={theme}
-                checked={currentTheme === theme}
-                onChange={handleThemeChange}
-              />
-            </label>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <button
+      onClick={toggleTheme}
+      className="btn btn-ghost btn-circle"
+      aria-label={currentTheme === "light" ? "Switch to dark theme" : "Switch to light theme"}
+      title={currentTheme === "light" ? "Switch to dark theme" : "Switch to light theme"}
+    >
+      {currentTheme === "light" ? (
+        // Moon icon (shown in light mode to switch to dark)
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+        </svg>
+      ) : (
+        // Sun icon (shown in dark mode to switch to light)
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2" />
+          <path d="M12 20v2" />
+          <path d="m4.93 4.93 1.41 1.41" />
+          <path d="m17.66 17.66 1.41 1.41" />
+          <path d="M2 12h2" />
+          <path d="M20 12h2" />
+          <path d="m6.34 17.66-1.41-1.41" />
+          <path d="m19.07 4.93-1.41 1.41" />
+        </svg>
+      )}
+    </button>
   );
 };
 
 export default ThemeToggle;
-
