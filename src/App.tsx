@@ -193,8 +193,29 @@ function App() {
   // First effect: fetch relays asynchronously
   useEffect(() => {
     async function fetchRelays() {
+      let cachedRelays: string[] | undefined;
+
+      // Try to load from cache first (Stale-While-Revalidate)
       try {
-        setIsLoadingRelays(true);
+        const cached = localStorage.getItem("shogun-relays");
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            cachedRelays = parsed;
+            setRelays(cachedRelays);
+            setIsLoadingRelays(false); // Show UI immediately with stale data
+          }
+        }
+      } catch (e) {
+        console.warn("Failed to load cached relays:", e);
+      }
+
+      try {
+        // Only show loading if we didn't find a cache
+        if (!cachedRelays) {
+          setIsLoadingRelays(true);
+        }
+
         const fetchedRelays = await window.ShogunRelays.forceListUpdate();
 
         console.log("Fetched relays:", fetchedRelays);
@@ -205,11 +226,22 @@ function App() {
             ? fetchedRelays
             : ["https://peer.wallie.io/gun"];
 
-        setRelays(peersToUse);
+        // Check if we need to update state (avoid re-initialization if same)
+        const hasChanged =
+          !cachedRelays ||
+          peersToUse.length !== cachedRelays.length ||
+          !peersToUse.every((val, index) => val === cachedRelays![index]);
+
+        if (hasChanged) {
+          localStorage.setItem("shogun-relays", JSON.stringify(peersToUse));
+          setRelays(peersToUse);
+        }
       } catch (error) {
         console.error("Error fetching relays:", error);
-        // Fallback to default peer
-        setRelays(["https://peer.wallie.io/gun"]);
+        // Fallback to default peer only if we don't have cache
+        if (!cachedRelays) {
+          setRelays(["https://peer.wallie.io/gun"]);
+        }
       } finally {
         setIsLoadingRelays(false);
       }
