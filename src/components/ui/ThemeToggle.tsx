@@ -25,48 +25,31 @@ export const ThemeToggle: React.FC = () => {
     setTheme(currentTheme);
   }, []);
 
-  // Handle theme change
-  const handleThemeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTheme(e.target.value as Theme);
+  const toggleTheme = () => {
+    setTheme(currentTheme === "dark" ? "light" : "dark");
   };
 
   return (
-    <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-circle">
-        <span className="inline-flex items-center gap-1">
-          <span
-            className="inline-block w-2 h-2 rounded-full"
-            style={{
-              backgroundColor: currentTheme === "dark" ? "#38bdf8" : "#f97316",
-            }}
-          />
-        </span>
-      </div>
-      <ul
-        tabIndex={0}
-        className="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52"
+    <div className="tooltip tooltip-bottom" data-tip={currentTheme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+      <button
+        onClick={toggleTheme}
+        className="btn btn-ghost btn-circle"
+        aria-label="Toggle theme"
       >
-        {themes.map((theme) => (
-          <li key={theme} className="form-control">
-            <label className="label cursor-pointer justify-between">
-              <span className="label-text text-sm capitalize">
-                {theme === "dark" ? "Dark" : "Light"}
-              </span>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="radio theme-controller"
-                value={theme}
-                checked={currentTheme === theme}
-                onChange={handleThemeChange}
-              />
-            </label>
-          </li>
-        ))}
-      </ul>
+        {currentTheme === "dark" ? (
+          // Sun icon for Light mode switch
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        ) : (
+          // Moon icon for Dark mode switch
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        )}
+      </button>
     </div>
   );
 };
 
 export default ThemeToggle;
-
