@@ -152,7 +152,7 @@ function ShogunApp({ shogun }: ShogunAppProps) {
     showMetamask: true,
     showNostr: true,
     showZkProof: true,
-    enableGunDebug: true,
+    enableGunDebug: import.meta.env.DEV,
     enableConnectionMonitoring: true,
   };
 
@@ -252,7 +252,7 @@ function App() {
         showMetamask: true,
         showZkProof: true,
         // Advanced features
-        enableGunDebug: true,
+        enableGunDebug: import.meta.env.DEV,
         enableConnectionMonitoring: true,
         defaultPageSize: 20,
         connectionTimeout: 10000,
