@@ -188,14 +188,29 @@ function ShogunApp({ shogun }: ShogunAppProps) {
 
 function App() {
   const [sdk, setSdk] = useState<ShogunCore | null>(null);
-  const [relays, setRelays] = useState<string[]>([]);
-  const [isLoadingRelays, setIsLoadingRelays] = useState(true);
+
+  // Initialize relays from localStorage if available (Stale-While-Revalidate)
+  const [relays, setRelays] = useState<string[]>(() => {
+    try {
+      const cached = localStorage.getItem("shogun-relays");
+      return cached ? JSON.parse(cached) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  // If we have cached relays, we are not "loading" in the blocking sense
+  const [isLoadingRelays, setIsLoadingRelays] = useState(() => relays.length === 0);
 
   // First effect: fetch relays asynchronously
   useEffect(() => {
     async function fetchRelays() {
-      try {
+      // Only show loading state if we didn't have cached relays
+      if (relays.length === 0) {
         setIsLoadingRelays(true);
+      }
+
+      try {
         const fetchedRelays = await window.ShogunRelays.forceListUpdate();
 
         console.log("Fetched relays:", fetchedRelays);
@@ -206,11 +221,22 @@ function App() {
             ? fetchedRelays
             : ["https://peer.wallie.io/gun"];
 
-        setRelays(peersToUse);
+        // Update localStorage for next time
+        localStorage.setItem("shogun-relays", JSON.stringify(peersToUse));
+
+        // If we didn't have relays initially, update state to trigger initialization
+        if (relays.length === 0) {
+          setRelays(peersToUse);
+        }
+        // Note: If we already had relays, we keep using them for this session
+        // to avoid re-initializing Gun/ShogunCore mid-session.
+
       } catch (error) {
         console.error("Error fetching relays:", error);
-        // Fallback to default peer
-        setRelays(["https://peer.wallie.io/gun"]);
+        // Fallback to default peer if we have nothing
+        if (relays.length === 0) {
+           setRelays(["https://peer.wallie.io/gun"]);
+        }
       } finally {
         setIsLoadingRelays(false);
       }
