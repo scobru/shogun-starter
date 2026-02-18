@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -144,8 +144,8 @@ interface ShogunAppProps {
 }
 
 function ShogunApp({ shogun }: ShogunAppProps) {
-
-  const providerOptions = {
+  // Memoize provider options to prevent unnecessary re-renders in ShogunButtonProvider
+  const providerOptions = useMemo(() => ({
     appName: "Shogun Starter App",
     theme: "dark",
     showWebauthn: true,
@@ -154,15 +154,16 @@ function ShogunApp({ shogun }: ShogunAppProps) {
     showZkProof: true,
     enableGunDebug: true,
     enableConnectionMonitoring: true,
-  };
+  }), []);
 
-  const handleLoginSuccess = (result: any) => {
+  // Memoize callback functions to ensure stable references
+  const handleLoginSuccess = useCallback((result: any) => {
     console.log("Login success:", result);
-  };
+  }, []);
 
-  const handleError = (error: string | Error) => {
+  const handleError = useCallback((error: string | Error) => {
     console.error("Auth error:", error);
-  };
+  }, []);
 
   return (
     <Router>
