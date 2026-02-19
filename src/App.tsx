@@ -49,6 +49,12 @@ const MainApp: React.FC<MainAppProps> = () => {
 
   return (
     <div className="app-shell">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 btn btn-sm btn-primary"
+      >
+        Skip to content
+      </a>
       <header className="navbar-custom">
         <div className="navbar-inner">
           <div className="navbar-title">
@@ -64,7 +70,7 @@ const MainApp: React.FC<MainAppProps> = () => {
         </div>
       </header>
 
-      <main className="app-main">
+      <main className="app-main" id="main-content">
         <div className="flex justify-center mb-6">
           <div className={`badge-custom ${isLoggedIn ? "success" : "error"}`}>
             <span className="badge-dot" />
