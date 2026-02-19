@@ -188,14 +188,34 @@ function ShogunApp({ shogun }: ShogunAppProps) {
 
 function App() {
   const [sdk, setSdk] = useState<ShogunCore | null>(null);
-  const [relays, setRelays] = useState<string[]>([]);
-  const [isLoadingRelays, setIsLoadingRelays] = useState(true);
+
+  // Initialize relays from localStorage if available (SWR pattern)
+  // This allows the app to load immediately with cached relays while fetching updates in the background
+  const [relays, setRelays] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('shogun-relays');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {
+      console.warn("Failed to parse cached relays", e);
+    }
+    return [];
+  });
+
+  // If we have cached relays, we don't need to block the UI (isLoadingRelays = false)
+  const [isLoadingRelays, setIsLoadingRelays] = useState(() => relays.length === 0);
 
   // First effect: fetch relays asynchronously
   useEffect(() => {
     async function fetchRelays() {
       try {
-        setIsLoadingRelays(true);
+        // Only show loading state if we have no cached relays
+        if (relays.length === 0) {
+          setIsLoadingRelays(true);
+        }
+
         const fetchedRelays = await window.ShogunRelays.forceListUpdate();
 
         console.log("Fetched relays:", fetchedRelays);
@@ -206,17 +226,31 @@ function App() {
             ? fetchedRelays
             : ["https://peer.wallie.io/gun"];
 
-        setRelays(peersToUse);
+        // Cache the fresh relays for next time
+        localStorage.setItem('shogun-relays', JSON.stringify(peersToUse));
+
+        // Only update state if the relays have actually changed to avoid unnecessary re-initialization
+        setRelays(prev => {
+          if (JSON.stringify(prev) !== JSON.stringify(peersToUse)) {
+            console.log("Relays updated, refreshing SDK...");
+            return peersToUse;
+          }
+          return prev;
+        });
       } catch (error) {
         console.error("Error fetching relays:", error);
-        // Fallback to default peer
-        setRelays(["https://peer.wallie.io/gun"]);
+        // Fallback to default peer if we have nothing at all
+        setRelays(prev => {
+          if (prev.length > 0) return prev;
+          return ["https://peer.wallie.io/gun"];
+        });
       } finally {
         setIsLoadingRelays(false);
       }
     }
 
     fetchRelays();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Second effect: initialize ShogunCore only after relays are loaded
