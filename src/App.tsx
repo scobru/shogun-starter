@@ -14,9 +14,8 @@ import {
 import { shogunConnector } from "shogun-button-react";
 import type { ShogunCore } from "shogun-core";
 import Gun from "gun";
-import { ThemeToggle } from "./components/ui/ThemeToggle";
 import ExampleContent from "./components/ExampleContent";
-import logo from "/logo.svg";
+import { Shell } from "./components/layout/Shell";
 
 import "./index.css";
 import "shogun-relays";
@@ -48,95 +47,55 @@ const MainApp: React.FC<MainAppProps> = () => {
   const { isLoggedIn } = useShogun();
 
   return (
-    <div className="app-shell">
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 btn btn-sm btn-primary"
-      >
-        Skip to content
-      </a>
-      <header className="navbar-custom">
-        <div className="navbar-inner">
-          <div className="navbar-title">
-            <img src={logo} alt="Shogun Starter" className="w-12 h-12" />
-            <div>
-              <span className="font-semibold">Shogun Starter</span>
-              <p className="navbar-subtitle">
-                Decentralized application template
-              </p>
-            </div>
-          </div>
-          <ThemeToggle />
-        </div>
-      </header>
-
-      <main className="app-main" id="main-content">
-        <div className="flex justify-center mb-6">
-          <div className={`badge-custom ${isLoggedIn ? "success" : "error"}`}>
-            <span className="badge-dot" />
+    <Shell>
+      <div className="flex flex-col gap-12">
+        <div className="flex justify-start">
+          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold border ${isLoggedIn
+            ? "bg-primary-container text-on-primary-container border-primary/20"
+            : "bg-surface-variant text-on-surface-variant border-outline/20"}`}>
+            <span className={`w-2 h-2 rounded-full ${isLoggedIn ? "bg-primary" : "bg-outline"}`} />
             <span>{isLoggedIn ? "Authenticated" : "Not authenticated"}</span>
           </div>
         </div>
 
         {/* Authentication Card */}
-        <div className="card content-card mb-6 p-8">
-          <div className="card-body">
-            <div className="mb-4">
-              <h2 className="text-2xl font-bold mb-2">Authentication</h2>
-              <p className="text-secondary">
+        <div className="bg-surface p-8 md:p-10 rounded-[28px] border border-outline/10 hover:border-primary/40 transition-colors shadow-elevation-1">
+          <div className="flex flex-col gap-6">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold text-on-surface font-display">Authentication</h2>
+              <p className="text-on-surface-variant text-lg">
                 Connect with your preferred method and start building.
               </p>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-start">
               <ShogunButton />
             </div>
           </div>
         </div>
 
-        {/* Example Content - Replace this with your app content */}
-        <ExampleContent />
-      </main>
-
-      <footer className="w-full py-5 px-1 mt-auto">
-        <div className="w-full">
-          <ul className="menu menu-horizontal w-full">
-            <div className="flex justify-center items-center gap-2 text-sm w-full">
-              <div className="text-center">
-                <a href="https://github.com/scobru/shogun-starter" target="_blank" rel="noreferrer" className="link">
-                  Fork me
-                </a>
-              </div>
-              <span>·</span>
-              <div className="flex justify-center items-center gap-2">
-                <p className="m-0 text-center">
-                  Built with 
-                  <svg xmlns="http://www.w3.org/2000/svg" className="inline-block h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                  </svg>
-                  at
-                </p>
-                <a
-                  className="flex justify-center items-center gap-1"
-                  href="https://shogun-eco.xyz/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <span className="link">Shogun Ecosystem</span>
-                </a>
-                <span>·</span>
-                <span className="text-center">by <a href="https://github.com/scobru" target="_blank" rel="noreferrer" className="link">scobru</a></span>
-              </div>
-              <span>·</span>
-              <div className="text-center">
-                <a href="https://t.me/shogun_eco" target="_blank" rel="noreferrer" className="link">
-                  Support
-                </a>
-              </div>
-            </div>
-          </ul>
+        {/* Example Content */}
+        <div className="bg-surface p-8 md:p-10 rounded-[28px] border border-outline/10 hover:border-primary/40 transition-colors shadow-elevation-1">
+           <ExampleContent />
         </div>
-      </footer>
-    </div>
+
+        {/* Footer */}
+        <footer className="border-t border-outline/20 pt-12 pb-16 mt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-surface-variant flex items-center justify-center text-primary">
+                        <span className="material-symbols-outlined text-[18px]">local_florist</span>
+                    </div>
+                    <span className="text-sm text-on-surface-variant font-medium">© 2024 Shogun Starter</span>
+                </div>
+                <div className="flex gap-10">
+                    <a className="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium" href="https://github.com/scobru/shogun-starter" target="_blank" rel="noreferrer">GitHub</a>
+                    <a className="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium" href="https://shogun-eco.xyz/" target="_blank" rel="noreferrer">Ecosystem</a>
+                    <a className="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium" href="https://t.me/shogun_eco" target="_blank" rel="noreferrer">Support</a>
+                </div>
+            </div>
+        </footer>
+      </div>
+    </Shell>
   );
 };
 
@@ -305,8 +264,8 @@ function App() {
 
   if (isLoadingRelays || !sdk) {
     return (
-      <div className="flex items-center justify-center h-screen flex-col gap-4">
-        <span className="loading loading-lg"></span>
+      <div className="flex items-center justify-center h-screen flex-col gap-4 bg-background text-on-surface">
+        <span className="loading loading-lg text-primary"></span>
         <p className="text-secondary">
           {isLoadingRelays ? "Loading relays..." : "Initializing Shogun..."}
         </p>
@@ -318,4 +277,3 @@ function App() {
 }
 
 export default App;
-
