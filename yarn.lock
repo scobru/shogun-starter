@@ -2341,6 +2341,11 @@ diffie-hellman@^5.0.3:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
+dom-walk@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.2.tgz#0c548bef048f4d1f2a97249002236060daa3fd84"
+  integrity sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==
+
 domain-browser@4.22.0:
   version "4.22.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-4.22.0.tgz#6ddd34220ec281f9a65d3386d267ddd35c491f9f"
@@ -2643,6 +2648,14 @@ glob@^10.2.2:
     package-json-from-dist "^1.0.0"
     path-scurry "^1.11.1"
 
+global@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/global/-/global-4.4.0.tgz#3e7b105179006a323ed71aafca3e9c57a5cc6406"
+  integrity sha512-wv/LAoHdRE3BeTGz53FAamhGlPLhlssK45usmGFThIi4XqnBmjKQ16u+RNbP7WvigRZDxUsM0J3gcQ5yicaL0w==
+  dependencies:
+    min-document "^2.19.0"
+    process "^0.11.10"
+
 gopd@^1.0.1, gopd@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/gopd/-/gopd-1.2.0.tgz#89f56b8217bdbc8802bd299df6d7f1081d7e51a1"
@@ -2679,6 +2692,14 @@ gun@^0.2020.1241:
   version "0.2020.1241"
   resolved "https://registry.yarnpkg.com/gun/-/gun-0.2020.1241.tgz#a43de6faf046d2a9b89d1b532a9346b88a90f1ee"
   integrity sha512-rmGqLuJj4fAuZ/0lddCvXHbENPkEnBOBYpq+kXHrwQ5RdNtQ5p0Io99lD1qUXMFmtwNacQ/iqo3VTmjmMyAYZg==
+  dependencies:
+    ws "^7.2.1"
+  optionalDependencies:
+    "@peculiar/webcrypto" "^1.1.1"
+
+"gun@git+https://github.com/scobru/gun.git":
+  version "0.2020.1241"
+  resolved "git+https://github.com/scobru/gun.git#8ad9ea0e51fa738ff41ae997cc7820d7b470c93f"
   dependencies:
     ws "^7.2.1"
   optionalDependencies:
@@ -3019,6 +3040,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
+lodash.merge@^4.6.2:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
+  integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+
 loose-envify@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
@@ -3088,6 +3114,13 @@ miller-rabin@^4.0.0:
   dependencies:
     bn.js "^4.0.0"
     brorand "^1.0.1"
+
+min-document@^2.19.0:
+  version "2.19.2"
+  resolved "https://registry.yarnpkg.com/min-document/-/min-document-2.19.2.tgz#f95db44639eaae3ac8ea85ae6809ae85ff7e3b81"
+  integrity sha512-8S5I8db/uZN8r9HSLFVWPdJCvYOejMcEC82VIzNUc6Zkklf/d1gg2psfE79/vyhWOj4+J8MtwmoOz3TmvaGu5A==
+  dependencies:
+    dom-walk "^0.1.0"
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
@@ -3468,6 +3501,11 @@ postcss@^8.4.41, postcss@^8.4.43, postcss@^8.5.5, postcss@^8.5.6:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
+prettier-config-standard@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/prettier-config-standard/-/prettier-config-standard-7.0.0.tgz#23fbc6f7240dd007b49d0d4c084ba58fd2ce57c2"
+  integrity sha512-NgZy4TYupJR6aMMuV/Aqs0ONnVhlFT8PXVkYRskxREq8EUhJHOddVfBxPV6fWpgcASpJSgvvhVLk0CBO5M3Hvw==
+
 prettier@^3.5.3:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.6.2.tgz#ccda02a1003ebbb2bfda6f83a074978f608b9393"
@@ -3569,6 +3607,13 @@ react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.2"
 
+react-dom@^19.2.1:
+  version "19.2.4"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.2.4.tgz#6fac6bd96f7db477d966c7ec17c1a2b1ad8e6591"
+  integrity sha512-AXJdLo8kgMbimY95O2aKQqsz2iWi9jMgKJhRBAxECE4IFxfcazB2LmzloIoibJI3C12IlY20+KFaLv+71bUJeQ==
+  dependencies:
+    scheduler "^0.27.0"
+
 react-refresh@^0.17.0:
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.17.0.tgz#b7e579c3657f23d04eccbe4ad2e58a8ed51e7e53"
@@ -3595,6 +3640,11 @@ react@^18.2.0:
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
   dependencies:
     loose-envify "^1.1.0"
+
+react@^19.2.1:
+  version "19.2.4"
+  resolved "https://registry.yarnpkg.com/react/-/react-19.2.4.tgz#438e57baa19b77cb23aab516cf635cd0579ee09a"
+  integrity sha512-9nfp2hYpCwOjAN+8TZFGhtWEwgvWHXqESH8qT89AT/lWklpLON22Lc8pEtnpsZz7VmawabSU0gCjnj8aC0euHQ==
 
 readable-stream@^2.3.8:
   version "2.3.8"
@@ -3750,6 +3800,11 @@ scheduler@^0.23.2:
   dependencies:
     loose-envify "^1.1.0"
 
+scheduler@^0.27.0:
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.27.0.tgz#0c4ef82d67d1e5c1e359e8fc76d3a87f045fe5bd"
+  integrity sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==
+
 semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
@@ -3803,10 +3858,10 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shogun-button-react@^6.4.4:
-  version "6.4.6"
-  resolved "https://registry.yarnpkg.com/shogun-button-react/-/shogun-button-react-6.4.6.tgz#d08480a9f31d86ae58df3af962fe6a38ada4a39d"
-  integrity sha512-saLlSyv6L6uUZyZkdHwekAKQ3eEUmNGHlede/IZZ76Mlk/IvgU3qvhYpxcWZ7b74rvugPTn0jM0xTWps62lgBA==
+shogun-button-react@^6.9.4:
+  version "6.9.4"
+  resolved "https://registry.yarnpkg.com/shogun-button-react/-/shogun-button-react-6.9.4.tgz#d9ce11deb10f14df2cf21aacd25e336232d55568"
+  integrity sha512-DtF5GZLuBw2WO6LTpY8dWxLm/HnZ60GsE+Nt0khYNCGx2PmaDe0Ph4ph1/k3JAvod3huh78hKv/ukKMSILnH7g==
   dependencies:
     assert "^2.1.0"
     buffer "^6.0.3"
@@ -3815,15 +3870,17 @@ shogun-button-react@^6.4.4:
     gun "^0.2020.1241"
     prettier "^3.5.3"
     process "^0.11.10"
+    react "^19.2.1"
+    react-dom "^19.2.1"
     rxjs "^7.8.2"
-    shogun-core "^6.5.4"
+    shogun-core "^6.9.4"
     stream-browserify "^3.0.0"
     util "^0.12.5"
 
-shogun-core@^6.4.4, shogun-core@^6.5.4:
-  version "6.5.4"
-  resolved "https://registry.yarnpkg.com/shogun-core/-/shogun-core-6.5.4.tgz#eae6a7bb7603e0ec72b6bf94db5fac70a9797ed6"
-  integrity sha512-Bm055RRzlGHd9U5Sv63aK2EA8bUUFNriBYtk/VvYb2r2faLp41n9JLW18ScroG2i1AbZC93J/nhCMFhQDsAILA==
+shogun-core@^6.9.4:
+  version "6.9.4"
+  resolved "https://registry.yarnpkg.com/shogun-core/-/shogun-core-6.9.4.tgz#af6f27db2eaed9f9e28d6b0a88e9e4266c1f5629"
+  integrity sha512-hPaXrT9qg2HpbIzc2K+IdS9p9icd5di8blQoj5uKIRCwW6OiSZlOaOFaPfYIvboxKNugMCUob/mNBcRYzZacAQ==
   dependencies:
     "@hpke/chacha20poly1305" "^1.7.1"
     "@hpke/hybridkem-x-wing" "^0.6.1"
@@ -3842,19 +3899,22 @@ shogun-core@^6.4.4, shogun-core@^6.5.4:
     crypto-browserify "^3.12.0"
     elliptic "^6.6.1"
     ethers "^6.13.5"
-    gun "^0.2020.1241"
+    global "^4.4.0"
+    gun "git+https://github.com/scobru/gun.git"
+    lodash.merge "^4.6.2"
     nostr-tools "^2.15.0"
     openpgp "^6.2.2"
+    prettier-config-standard "^7.0.0"
     rxjs "^7.8.2"
     stream-browserify "^3.0.0"
     ts-mls "^1.3.2"
     uuid "^11.1.0"
     vm-browserify "^1.1.2"
 
-shogun-relays@^1.0.4:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/shogun-relays/-/shogun-relays-1.0.8.tgz#970a2201a58377055c6ed84f2d39e6946014dc76"
-  integrity sha512-QU0DMZllUZ1F/+lLdYEF3m6rJh7nlw/9w75B6ufrgjHTb7l1DDBIYImVGY37p5x0geJ+YobRLhr551h2pAoXlA==
+shogun-relays@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/shogun-relays/-/shogun-relays-1.1.1.tgz#b6b3f8150ce812c7f8454bdf1290bff3244645c8"
+  integrity sha512-8ujvbeOrY4EQLOuW3P8bMKQYW88NSx1Wz8pBfevqVM3P/2/dUFSsFaZNCeC6ugkMZB/ZNc2gcFe2MsnXXRpq2Q==
   dependencies:
     get-urls "^10.0.1"
     gun "^0.2020.1241"
