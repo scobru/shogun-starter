@@ -17,6 +17,7 @@ import Gun from "gun";
 import "gun/sea";
 import "gun/axe";
 import { ThemeToggle } from "./components/ui/ThemeToggle";
+import { CopyCommand } from "./components/ui/CopyCommand";
 import ExampleContent from "./components/ExampleContent";
 import logo from "/logo.svg";
 
@@ -79,15 +80,7 @@ const MainApp: React.FC = () => {
             with Shogun Core, GunDB, and modern web technologies.
           </p>
           
-          <div className="terminal-card group">
-            <span className="text-secondary">$</span>
-            <span className="flex-1 ml-3 text-content">npm install shogun-starter</span>
-            <button className="opacity-0 group-hover:opacity-60 transition-opacity">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-              </svg>
-            </button>
-          </div>
+          <CopyCommand command="npm install shogun-starter" />
 
           <div className="flex flex-wrap gap-4 items-center">
             <div className="inline-block">
