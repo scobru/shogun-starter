@@ -157,11 +157,15 @@ interface ShogunAppProps {
 function ShogunApp({ shogun, options }: ShogunAppProps) {
   // Memoize callback functions to ensure stable references
   const handleLoginSuccess = useCallback((result: any) => {
-    console.log("Login success:", result);
+    if (import.meta.env.DEV) {
+      console.log("Login success:", result);
+    }
   }, []);
 
   const handleError = useCallback((error: string | Error) => {
-    console.error("Auth error:", error);
+    if (import.meta.env.DEV) {
+      console.error("Auth error:", error);
+    }
   }, []);
 
   return (
@@ -198,9 +202,17 @@ function App() {
     async function fetchRelays() {
       try {
         setIsLoadingRelays(true);
+
+        // Safety check: ensure ShogunRelays is available
+        if (!window.ShogunRelays) {
+          throw new Error("ShogunRelays extension not loaded");
+        }
+
         const fetchedRelays = await window.ShogunRelays.forceListUpdate();
 
-        console.log("Fetched relays:", fetchedRelays);
+        if (import.meta.env.DEV) {
+          console.log("Fetched relays:", fetchedRelays);
+        }
 
         const peersToUse =
           fetchedRelays && fetchedRelays.length > 0
@@ -209,7 +221,12 @@ function App() {
 
         setRelays(peersToUse);
       } catch (error) {
-        console.error("Error fetching relays:", error);
+        if (import.meta.env.DEV) {
+          console.error("Error fetching relays:", error);
+        } else {
+          // Log generic warning in production
+          console.warn("Could not fetch relays from extension, using fallback.");
+        }
         setRelays(["https://shogun-relay.scobrudot.dev/gun"]);
       } finally {
         setIsLoadingRelays(false);
