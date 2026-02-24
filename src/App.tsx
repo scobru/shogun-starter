@@ -207,45 +207,52 @@ function ShogunApp({ shogun, options }: ShogunAppProps) {
   );
 }
 
+const DEFAULT_RELAYS = ["https://shogun-relay.scobrudot.dev/gun"];
+
+const getInitialRelays = (): string[] => {
+  try {
+    const cached = localStorage.getItem("shogun-relays");
+    if (cached) {
+      return JSON.parse(cached);
+    }
+  } catch (error) {
+    console.error("Failed to parse cached relays:", error);
+  }
+  return DEFAULT_RELAYS;
+};
+
 function App() {
   const [shogunData, setShogunData] = useState<{
     core: ShogunCore;
     options: any;
   } | null>(null);
-  const [relays, setRelays] = useState<string[]>([]);
-  const [isLoadingRelays, setIsLoadingRelays] = useState(true);
+  // Initialize with cached relays for immediate startup
+  const [relays, setRelays] = useState<string[]>(getInitialRelays);
 
-  // First effect: fetch relays asynchronously
+  // Effect 1: Background relay update (Stale-While-Revalidate)
   useEffect(() => {
-    async function fetchRelays() {
+    async function updateRelays() {
       try {
-        setIsLoadingRelays(true);
         const fetchedRelays = await window.ShogunRelays.forceListUpdate();
 
-        console.log("Fetched relays:", fetchedRelays);
+        if (fetchedRelays && fetchedRelays.length > 0) {
+          console.log("Updated relays:", fetchedRelays);
+          localStorage.setItem("shogun-relays", JSON.stringify(fetchedRelays));
+          setRelays(fetchedRelays);
 
-        const peersToUse =
-          fetchedRelays && fetchedRelays.length > 0
-            ? fetchedRelays
-            : ["https://shogun-relay.scobrudot.dev/gun"];
-
-        setRelays(peersToUse);
+        }
       } catch (error) {
-        console.error("Error fetching relays:", error);
-        setRelays(["https://shogun-relay.scobrudot.dev/gun"]);
-      } finally {
-        setIsLoadingRelays(false);
+        console.error("Error updating relays:", error);
+        // Keep using existing relays (cache or default)
       }
     }
 
-    fetchRelays();
+    updateRelays();
   }, []);
 
-  // Second effect: initialize ShogunCore only after relays are loaded
+  // Effect 2: Initialize Shogun immediately using initial relays
   useEffect(() => {
-    if (isLoadingRelays || relays.length === 0) {
-      return;
-    }
+    if (shogunData) return;
 
     const initShogun = async () => {
       const gun = Gun({
@@ -303,16 +310,21 @@ function App() {
     };
 
     initShogun();
-  }, [relays, isLoadingRelays]);
+  }, []); // Run once on mount using initial relays
+
+  // Effect 3: Sync Gun peers when relays change (handles race condition)
+  useEffect(() => {
+    if (shogunData?.core?.gun) {
+      shogunData.core.gun.opt({ peers: relays });
+    }
+  }, [relays, shogunData]);
 
 
-  if (isLoadingRelays || !shogunData) {
+  if (!shogunData) {
     return (
       <div className="flex items-center justify-center h-screen flex-col gap-4">
         <span className="loading loading-lg"></span>
-        <p className="text-secondary">
-          {isLoadingRelays ? "Loading relays..." : "Initializing Shogun..."}
-        </p>
+        <p className="text-secondary">Initializing Shogun...</p>
       </div>
     );
   }
