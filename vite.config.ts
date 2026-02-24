@@ -52,6 +52,15 @@ export default defineConfig({
       input: {
         main: "index.html",
       },
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-gun': ['gun', 'gun-avatar'],
+          'vendor-shogun-core': ['shogun-core'],
+          'vendor-shogun-button': ['shogun-button-react'],
+          'vendor-shogun-relays': ['shogun-relays'],
+        },
+      },
     },
   },
 
