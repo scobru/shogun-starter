@@ -43,6 +43,17 @@ declare global {
 // Main component that uses the auth context
 const MainApp: React.FC = () => {
   const { isLoggedIn } = useShogun();
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText("npm install shogun-starter");
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
 
   return (
     <div className="app-shell">
@@ -79,13 +90,24 @@ const MainApp: React.FC = () => {
             with Shogun Core, GunDB, and modern web technologies.
           </p>
           
-          <div className="terminal-card group">
+          <div className="terminal-card group relative">
             <span className="text-secondary">$</span>
-            <span className="flex-1 ml-3 text-content">npm install shogun-starter</span>
-            <button className="opacity-0 group-hover:opacity-60 transition-opacity">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-              </svg>
+            <span className="flex-1 ml-3 text-content select-all">npm install shogun-starter</span>
+            <button
+              onClick={handleCopy}
+              aria-label={copied ? "Copied to clipboard" : "Copy install command"}
+              className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity p-2 rounded-lg hover:bg-white/10 cursor-pointer"
+              title="Copy to clipboard"
+            >
+              {copied ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                </svg>
+              )}
             </button>
           </div>
 
