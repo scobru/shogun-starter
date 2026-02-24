@@ -7,3 +7,8 @@
 **Vulnerability:** The `enableGunDebug` flag was hardcoded to `true` in `src/App.tsx`, potentially exposing verbose debug logs and internal state in production builds.
 **Learning:** Hardcoded boolean flags for debug features are easy to overlook and can leak sensitive information or degrade performance in production.
 **Prevention:** Use `import.meta.env.DEV` (or equivalent environment checks) for any debug-related configuration to ensure it is automatically disabled in production builds.
+
+## 2025-02-19 - [Missing Content Security Policy in dApp]
+**Vulnerability:** The application lacked a Content Security Policy (CSP), leaving it vulnerable to XSS attacks. In a decentralized application where users interact with untrusted relays and potential malicious content, this is a significant risk.
+**Learning:** Decentralized apps often require permissive networking (fetching from multiple relays), which can make configuring CSP challenging. However, a baseline CSP is critical for defense-in-depth.
+**Prevention:** Implement a strict CSP that whitelists allowed sources for scripts, styles, and connections. Use `connect-src` to restrict relay connections if possible, or monitor them.
