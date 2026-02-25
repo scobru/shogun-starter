@@ -179,7 +179,10 @@ interface ShogunAppProps {
 function ShogunApp({ shogun, options }: ShogunAppProps) {
   // Memoize callback functions to ensure stable references
   const handleLoginSuccess = useCallback((result: any) => {
-    console.log("Login success:", result);
+    // Sentinel: Prevent sensitive data leakage in production
+    if (import.meta.env.DEV) {
+      console.log("Login success:", result);
+    }
   }, []);
 
   const handleError = useCallback((error: string | Error) => {
@@ -236,7 +239,10 @@ function App() {
         const fetchedRelays = await window.ShogunRelays.forceListUpdate();
 
         if (fetchedRelays && fetchedRelays.length > 0) {
-          console.log("Updated relays:", fetchedRelays);
+          // Sentinel: Only log relay updates in development
+          if (import.meta.env.DEV) {
+            console.log("Updated relays:", fetchedRelays);
+          }
           localStorage.setItem("shogun-relays", JSON.stringify(fetchedRelays));
           setRelays(fetchedRelays);
 
