@@ -1,77 +1,80 @@
 import React from "react";
 import { useShogun } from "shogun-button-react";
 
-const ExampleContent: React.FC = () => {
-  const { isLoggedIn, userPub, username, sdk } = useShogun();
+// Optimization: Define static content outside component to avoid recreation on every render
+const features = [
+  {
+    title: "Utility-First Logic",
+    desc: "Leverage the power of utility classes while maintaining a cohesive design system built for speed.",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Material 3 Aesthetic",
+    desc: "High border radii, tonal surfaces, and adaptive color roles bringing the 'Papercraft' feel to the web.",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Accessible by Default",
+    desc: "Colors and components are tested for contrast and screen reader compatibility. Build with confidence.",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+        />
+      </svg>
+    ),
+  },
+];
 
-  const features = [
-    {
-      title: "Utility-First Logic",
-      desc: "Leverage the power of utility classes while maintaining a cohesive design system built for speed.",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: "Material 3 Aesthetic",
-      desc: "High border radii, tonal surfaces, and adaptive color roles bringing the 'Papercraft' feel to the web.",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: "Accessible by Default",
-      desc: "Colors and components are tested for contrast and screen reader compatibility. Build with confidence.",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-          />
-        </svg>
-      ),
-    },
-  ];
+// Optimization: Use React.memo to prevent unnecessary re-renders when parent state updates
+// (e.g. when "copied" state changes in MainApp)
+const ExampleContent = React.memo(() => {
+  const { isLoggedIn, userPub, username } = useShogun();
 
   if (!isLoggedIn) {
     return (
@@ -158,6 +161,8 @@ const ExampleContent: React.FC = () => {
       </div>
     </div>
   );
-};
+});
+
+ExampleContent.displayName = "ExampleContent";
 
 export default ExampleContent;
