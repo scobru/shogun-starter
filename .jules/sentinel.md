@@ -12,3 +12,8 @@
 **Vulnerability:** The application lacked a Content Security Policy (CSP), leaving it vulnerable to XSS attacks. In a decentralized application where users interact with untrusted relays and potential malicious content, this is a significant risk.
 **Learning:** Decentralized apps often require permissive networking (fetching from multiple relays), which can make configuring CSP challenging. However, a baseline CSP is critical for defense-in-depth.
 **Prevention:** Implement a strict CSP that whitelists allowed sources for scripts, styles, and connections. Use `connect-src` to restrict relay connections if possible, or monitor them.
+
+## 2025-05-27 - [Sensitive Data Leakage via Console Logs]
+**Vulnerability:** User authentication data and relay configurations were being logged to the console in production builds via `console.log`.
+**Learning:** Developers often use console logs for debugging during development but forget to remove or shield them before deployment. Even "benign" logs can leak sensitive user information or internal architecture details.
+**Prevention:** Establish a pattern of wrapping all debug logs in `if (import.meta.env.DEV) { ... }` or use a logging utility that automatically strips logs in production.
